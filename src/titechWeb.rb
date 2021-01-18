@@ -2,12 +2,16 @@ require 'selenium-webdriver'
 require File.dirname(__FILE__) + '/loginInfo'
 
 class TitechWeb
-  LOGIN_URL = "https://portal.nap.gsic.titech.ac.jp/GetAccess/Login?Template=userpass_key&AUTHMETHOD=UserPassword"
+  LOGIN_URL = "https://portal.titech.ac.jp/"
   def login
     begin
       driver = Selenium::WebDriver.for :chrome
       driver.get LOGIN_URL
       login_info = LoginInfo.new()
+
+      driver.find_element(:xpath, '//*[@id="portal-form"]/form[2]/input').click
+      sleep 1
+
       driver.find_element(:name, 'usr_name').send_keys login_info.username
       driver.find_element(:name, 'usr_password').send_keys login_info.password
       driver.find_element(:name, 'OK').click
@@ -32,7 +36,7 @@ class TitechWeb
 
       sleep 1
     ensure
-      sleep 1
+      sleep 2
     end
   end
 end
