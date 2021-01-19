@@ -4,13 +4,11 @@ require File.dirname(__FILE__) + '/loginInfo'
 class TitechWeb
   LOGIN_URL = "https://portal.titech.ac.jp/"
   
-  def initialize(open_time)
-    @open_time = open_time
-  end
-
   def login
     begin
-      driver = Selenium::WebDriver.for :chrome
+      args = ['disable-infobars']
+      options = Selenium::WebDriver::Chrome::Options.new(args: args)
+      driver = Selenium::WebDriver.for :chrome, options: options
       driver.get LOGIN_URL
       login_info = LoginInfo.new()
 
@@ -40,17 +38,16 @@ class TitechWeb
 
       driver.find_element(:name, 'OK').click
 
-      # sleep 1
     ensure
-
-      sleep @open_time
+      gets 
+      driver.quit()
     end
   end
 end
 
 
 if __FILE__ == $0
-  titech = TitechWeb.new(ARGV[0].to_i)
+  titech = TitechWeb.new()
   titech.login()
 end
 
