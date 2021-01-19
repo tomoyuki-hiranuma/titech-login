@@ -1,0 +1,2 @@
+#!/bin/sh
+ruby "/Users/tomoyuki/Documents/app/titech-login/src/titechWeb.rb"
